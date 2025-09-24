@@ -25,6 +25,8 @@ PanelWindow {
 
         SystemTray {
             Layout.alignment: Qt.AlignRight
+            parentWindow: root
+            parentScreen: root.screen
         }
     }
 }
