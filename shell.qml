@@ -4,4 +4,7 @@ import Quickshell
 Shell {
     Bar {
     }
+
+    Dock {
+    }
 }
