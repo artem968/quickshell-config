@@ -1,24 +1,56 @@
+// WorkspaceIndicator.qml
 import QtQuick
-import Quickshell
+import QtQuick.Controls
 import Quickshell.Hyprland
 
-Row {
+Rectangle {
     id: root
-    spacing: 8
+    color: "transparent"
+    height: 30
+    width: workspaceRow.implicitWidth + 20
 
-    Repeater {
-        model: Hyprland.workspaces
-        delegate: Text {
-            text: modelData.id.toString()
-            color: modelData.id === Hyprland.focusedWorkspace.id ? "white" : "gray"
-            font.pixelSize: 14
+    property int currentWorkspace: Hyprland.focusedWorkspace ? Hyprland.focusedWorkspace.id : 1
+    property var workspaceList: {
+        var workspaces = Hyprland.workspaces ? Hyprland.workspaces.values : []
+        if (workspaces.length === 0) {
+            return [{id: 1, name: "1"}]
+        }
+        return workspaces.slice().sort((a, b) => a.id - b.id)
+    }
 
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    Hyprland.dispatch("workspace " + modelData.id)
+    Row {
+        id: workspaceRow
+        anchors.centerIn: parent
+        spacing: 6
+
+        Repeater {
+            model: root.workspaceList
+
+            Rectangle {
+                width: modelData.id === root.currentWorkspace ? 32 : 16
+                height: 12
+                radius: 8
+                color: modelData.id === root.currentWorkspace ? "white" : "#444444"  // active = white, inactive = dark grey
+
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: {
+                        Hyprland.dispatch(`workspace ${modelData.id}`)
+                    }
+                }
+
+                Behavior on width {
+                    NumberAnimation { duration: 150; easing.type: Easing.InOutQuad }
                 }
             }
+        }
+    }
+
+    Connections {
+        target: Hyprland.workspaces
+        function onValuesChanged() {
+            root.workspaceList = Hyprland.workspaces.values
         }
     }
 }

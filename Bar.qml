@@ -15,12 +15,21 @@ PanelWindow {
         anchors.leftMargin: 10
         anchors.rightMargin: 10
 
-        WorkspacesIndicator { }
-
-        Item {
-             Layout.fillWidth: true
+        WorkspacesIndicator {
+            id: workspaces
         }
 
-        Clock { }
+        Item {
+            Layout.fillWidth: true
+        }
+
+        Clock {
+            id: clock
+            Layout.alignment: Qt.AlignCenter
+        }
+
+        Item {
+            Layout.fillWidth: true
+        }
     }
 }
