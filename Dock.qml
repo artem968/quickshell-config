@@ -2,6 +2,7 @@ import QtQuick
 import Quickshell
 import QtQuick.Layouts
 import Quickshell.Hyprland
+import Quickshell.Wayland
 
 PanelWindow {
     id: root
@@ -17,8 +18,8 @@ PanelWindow {
     radius: 15
 
     // These properties make the window float on top of other windows
-    layer: "overlay"
-    exclusive: false
+    WlrLayershell.layer: Layer.Overlay
+    exclusionMode: ExclusionMode.Ignore
 
     RowLayout {
         id: iconRow

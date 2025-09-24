@@ -1,7 +1,7 @@
 import QtQuick
 import Quickshell
 
-Shell {
+Scope {
     Bar {
     }
 
