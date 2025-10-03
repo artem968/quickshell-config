@@ -1,3 +1,4 @@
+//@ pragma UseQApplication
 import QtQuick
 import Quickshell
 import QtQuick.Layouts
@@ -7,27 +8,35 @@ PanelWindow {
     anchors.top: true
     anchors.left: true
     anchors.right: true
-    implicitHeight: 40
+    implicitHeight: 35
     color: "black"
 
-    GridLayout {
+    RowLayout {
         anchors.fill: parent
-        columns: 3
+        spacing: 0
 
-        SystemTray {
-            Layout.alignment: Qt.AlignLeft
-            parentWindow: root
-            parentScreen: root.screen
+        // WorkspacesIndicator on the far left with margin
+        WorkspacesIndicator {
+            Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
+            Layout.leftMargin: 6
+            Layout.maximumWidth: root.width / 3
         }
 
-    Clock {
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
-    }
+        // Spacer to push Clock to center
+        Item { Layout.fillWidth: true }
 
-        WorkspacesIndicator {
-            Layout.alignment: Qt.AlignRight
-            Layout.maximumWidth: root.width / 3
+        // Clock in the middle
+        Clock {
+            Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
+        }
+
+        // Spacer to push SystemTray to the far right
+        Item { Layout.fillWidth: true }
+
+        // SystemTray on the far right with margin
+        SystemTray {
+            Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+            Layout.rightMargin: 6
         }
     }
 }

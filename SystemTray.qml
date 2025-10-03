@@ -7,9 +7,10 @@ import Quickshell.Widgets
 Rectangle {
     id: root
 
-    // You can pass these from your bar
+    // Optional overrides; will fallback to actual window/screen
     property var parentWindow: null
     property var parentScreen: null
+
     property real widgetHeight: 24
     property real iconSize: 16
     property real padding: 4
@@ -28,6 +29,12 @@ Rectangle {
     color: SystemTray.items.values.length > 0 ? backgroundColor : "transparent"
     visible: SystemTray.items.values.length > 0
 
+    // Detect window/screen once the component is attached
+    Component.onCompleted: {
+        if (!parentWindow) parentWindow = root.window
+        if (!parentScreen && root.window) parentScreen = root.window.screen
+    }
+
     Row {
         id: systemTrayRow
         anchors.centerIn: parent
@@ -38,7 +45,6 @@ Rectangle {
 
             delegate: Item {
                 property var trayItem: modelData
-
                 width: iconSize + padding
                 height: iconSize + padding
 
@@ -66,20 +72,23 @@ Rectangle {
                     cursorShape: Qt.PointingHandCursor
 
                     onClicked: (mouse) => {
-                        if (!trayItem)
-                            return
+                        if (!trayItem) return
 
                         if (mouse.button === Qt.LeftButton && !trayItem.onlyMenu) {
                             trayItem.activate()
                         } else if (trayItem.hasMenu) {
-                            const globalPos = mapToGlobal(0, 0)
-                            const screenX = (parentScreen && parentScreen.x) || 0
-                            const relativeX = globalPos.x - screenX
+                            const menu = trayItem.menu
+                            // ✅ guard both menu and parentWindow
+                            if (menu && parentWindow) {
+                                const globalPos = mapToGlobal(0, 0)
+                                const screenX = parentScreen ? parentScreen.x : 0
+                                const relativeX = globalPos.x - screenX
 
-                            menuAnchor.menu = trayItem.menu
-                            menuAnchor.anchor.window = parentWindow
-                            menuAnchor.anchor.rect = Qt.rect(relativeX, root.height, parent.width, 1)
-                            menuAnchor.open()
+                                menuAnchor.menu = menu
+                                menuAnchor.anchor.window = parentWindow
+                                menuAnchor.anchor.rect = Qt.rect(relativeX, root.height, parent.width, 1)
+                                menuAnchor.open()
+                            }
                         }
                     }
                 }
