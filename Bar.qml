@@ -1,3 +1,4 @@
+//@ pragma UseQApplication
 import QtQuick
 import Quickshell
 import QtQuick.Layouts
@@ -7,7 +8,7 @@ PanelWindow {
     anchors.top: true
     anchors.left: true
     anchors.right: true
-    implicitHeight: 40
+    implicitHeight: 35
     color: "black"
 
     WorkspacesIndicator {
@@ -16,10 +17,8 @@ PanelWindow {
         anchors.verticalCenter: parent.verticalCenter
     }
 
-    Clock {
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
-    }
+        // Spacer to push Clock to center
+        Item { Layout.fillWidth: true }
 
     SystemTray {
         anchors.right: parent.right
