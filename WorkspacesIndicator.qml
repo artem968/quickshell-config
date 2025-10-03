@@ -11,7 +11,7 @@ Rectangle {
 
     property int currentWorkspace: Hyprland.focusedWorkspace ? Hyprland.focusedWorkspace.id : 1
     property var workspaceList: {
-        var workspaces = Hyprland.workspaces ? Hyprland.workspaces.values : []
+        var workspaces = (Hyprland.workspaces ? Hyprland.workspaces.values : []).filter(w => w.id !== -98)
         if (workspaces.length === 0) {
             return [{id: 1, name: "1"}]
         }
@@ -50,7 +50,12 @@ Rectangle {
     Connections {
         target: Hyprland.workspaces
         function onValuesChanged() {
-            root.workspaceList = Hyprland.workspaces.values
+            var workspaces = (Hyprland.workspaces ? Hyprland.workspaces.values : []).filter(w => w.id !== -98)
+            if (workspaces.length === 0) {
+                root.workspaceList = [{id: 1, name: "1"}]
+            } else {
+                root.workspaceList = workspaces.slice().sort((a, b) => a.id - b.id)
+            }
         }
     }
 }
