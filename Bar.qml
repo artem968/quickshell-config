@@ -14,8 +14,10 @@ PanelWindow {
         anchors.fill: parent
         columns: 3
 
-        WorkspacesIndicator {
+        SystemTray {
             Layout.alignment: Qt.AlignLeft
+            parentWindow: root
+            parentScreen: root.screen
         }
 
         Clock {
@@ -23,10 +25,9 @@ PanelWindow {
             Layout.fillWidth: true
         }
 
-        SystemTray {
+        WorkspacesIndicator {
             Layout.alignment: Qt.AlignRight
-            parentWindow: root
-            parentScreen: root.screen
+            Layout.maximumWidth: root.width / 3
         }
     }
 }
