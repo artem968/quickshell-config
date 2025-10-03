@@ -10,28 +10,22 @@ PanelWindow {
     implicitHeight: 40
     color: "black"
 
-    GridLayout {
-        anchors.fill: parent
-        columns: 3
+    WorkspacesIndicator {
+        anchors.left: parent.left
+        anchors.leftMargin: 10
+        anchors.verticalCenter: parent.verticalCenter
+    }
 
-        Item {
-            Layout.fillWidth: true
-        }
+    Clock {
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+    }
 
-        Clock {
-            Layout.alignment: Qt.AlignCenter
-        }
-
-        RowLayout {
-            Layout.alignment: Qt.AlignRight
-
-            SystemTray {
-                parentWindow: root
-                parentScreen: root.screen
-            }
-
-            WorkspacesIndicator {
-            }
-        }
+    SystemTray {
+        anchors.right: parent.right
+        anchors.rightMargin: 10
+        anchors.verticalCenter: parent.verticalCenter
+        parentWindow: root
+        parentScreen: root.screen
     }
 }
