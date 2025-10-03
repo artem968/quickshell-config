@@ -20,10 +20,10 @@ PanelWindow {
             parentScreen: root.screen
         }
 
-        Clock {
-            Layout.alignment: Qt.AlignCenter
-            Layout.fillWidth: true
-        }
+    Clock {
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+    }
 
         WorkspacesIndicator {
             Layout.alignment: Qt.AlignRight
