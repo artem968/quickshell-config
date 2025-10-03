@@ -14,19 +14,24 @@ PanelWindow {
         anchors.fill: parent
         columns: 3
 
-        WorkspacesIndicator {
-            Layout.alignment: Qt.AlignLeft
+        Item {
+            Layout.fillWidth: true
         }
 
         Clock {
             Layout.alignment: Qt.AlignCenter
-            Layout.fillWidth: true
         }
 
-        SystemTray {
+        RowLayout {
             Layout.alignment: Qt.AlignRight
-            parentWindow: root
-            parentScreen: root.screen
+
+            SystemTray {
+                parentWindow: root
+                parentScreen: root.screen
+            }
+
+            WorkspacesIndicator {
+            }
         }
     }
 }
