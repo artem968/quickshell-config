@@ -89,12 +89,5 @@ Rectangle {
 
     QsMenuAnchor {
         id: menuAnchor
-
-        palette {
-            window: "#1e1e1e"
-            windowText: "white"
-            highlight: "#333333"
-            highlightedText: "white"
-        }
     }
 }
