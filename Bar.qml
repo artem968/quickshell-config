@@ -11,20 +11,33 @@ PanelWindow {
     implicitHeight: 35
     color: "black"
 
-    WorkspacesIndicator {
-        anchors.left: parent.left
-        anchors.leftMargin: 10
-        anchors.verticalCenter: parent.verticalCenter
-    }
+    RowLayout {
+        anchors.fill: parent
+        spacing: 0
 
-        // Spacer to push Clock to center
+        // Left: WorkspacesIndicator
+        WorkspacesIndicator {
+            Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
+            Layout.leftMargin: 10
+        }
+
+        // Spacer to center Clock
         Item { Layout.fillWidth: true }
 
-    SystemTray {
-        anchors.right: parent.right
-        anchors.rightMargin: 10
-        anchors.verticalCenter: parent.verticalCenter
-        parentWindow: root
-        parentScreen: root.screen
+        // Center: Clock
+        Clock {
+            Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
+        }
+
+        // Spacer to push SystemTray to right
+        Item { Layout.fillWidth: true }
+
+        // Right: SystemTray
+        SystemTray {
+            Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+            Layout.rightMargin: 10
+            parentWindow: root
+            parentScreen: root.screen
+        }
     }
 }
