@@ -1,4 +1,3 @@
-//@ pragma UseQApplication
 import QtQuick
 import Quickshell
 import QtQuick.Layouts
@@ -18,7 +17,7 @@ PanelWindow {
         // Left: WorkspacesIndicator
         WorkspacesIndicator {
             Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
-            Layout.leftMargin: 10
+            Layout.leftMargin: 12
         }
 
         // Spacer to center Clock
