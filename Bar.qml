@@ -20,6 +20,11 @@ PanelWindow {
             Layout.leftMargin: 12
         }
 
+        SystemMonitor {
+            Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
+            Layout.leftMargin: 12
+        }
+
         // Spacer to center Clock
         Item { Layout.fillWidth: true }
 
