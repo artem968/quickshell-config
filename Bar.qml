@@ -1,60 +1,72 @@
-import QtQuick
+// Bar.qml
 import Quickshell
-import QtQuick.Layouts
+import QtQuick
 
-PanelWindow {
-    id: root
+Scope {
+  // the Time type we just created
+  Bat { id: batSource }
+  Resource { id: resourceSource}
 
-    // Anchoring for a floating, centered bar
-    anchors.top: parent.top
-    anchors.topMargin: 8
-    anchors.horizontalCenter: parent.horizontalCenter
+  Variants {
+    model: Quickshell.screens
 
-    implicitWidth: 600
-    implicitHeight: 48
+    PanelWindow {
+      required property var modelData
+      screen: modelData
 
-    // Styling for the Android-like appearance
-    color: "#222222"
-    radius: 24
+      anchors {
+        top: true
+        left: true
+        right: true
+      }
 
-    RowLayout {
-        anchors.fill: parent
-        anchors.leftMargin: 10
-        anchors.rightMargin: 10
-        spacing: 16
+      Rectangle {
+          anchors.fill: parent
+          color: "black"
+      }
 
-        // Left: WorkspacesIndicator
-        WorkspacesIndicator {
-            Layout.alignment: Qt.AlignVCenter
-        }
+      implicitHeight: 30
 
-        // Spacer
-        Item { Layout.fillWidth: true }
+      WorkspacesIndicator {
+          id: wsindicator
+          anchors.verticalCenter: parent.verticalCenter
+          anchors.left: parent.left
+          anchors.margins: 6
+      }
 
-        // Center: Clock
-        Clock {
-            Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
-        }
+      ResourceWidget {
+        time: resourceSource.time
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: wsindicator.right
+        anchors.margins: 6
+      }
 
-        // Spacer
-        Item { Layout.fillWidth: true }
+      Text {
+          id: clockText
+          color: "white"
+          font.pixelSize: 14
+          anchors.centerIn: parent
+      
+          SystemClock {
+              id: clock
+          }
+      
+          text: Qt.formatDateTime(clock.date, "hh:mm:ss")
+      }
 
-        // Right: SystemTray and new SystemControls
-        RowLayout {
-            Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
-            spacing: 10
+      SystemTray {
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.right: batWidget.left
+        anchors.margins: 6
+      }
 
-            SystemTray {
-                id: systemTray
-                parentWindow: root
-                parentScreen: root.screen
-            }
-
-            SystemControls {
-                id: systemControls
-                parentWindow: root
-                parentScreen: root.screen
-            }
-        }
+      BatWidget {
+          id: batWidget
+          time: batSource.time
+          anchors.verticalCenter: parent.verticalCenter
+          anchors.right: parent.right
+          anchors.margins: 6
+      }
     }
+  }
 }
