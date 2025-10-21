@@ -1,5 +1,8 @@
 import Quickshell
+import QtQuick
 
 Scope {
-    Bar {}
+    Loader {
+        source: "upower_bar/Bar.qml"
+    }
 }
